@@ -8,8 +8,8 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps {
-                git 'https://github.com/ayesha4620/Git_task/b1.git'
+            steps {.
+                git 'https://github.com/gituser4620/Git_task/blob/main/b1.git'
             }
         }
 
