@@ -8,7 +8,7 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps {.
+            steps {
                 git 'https://github.com/gituser4620/Git_task/blob/main/b1.git'
             }
         }
