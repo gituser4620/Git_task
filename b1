@@ -1,1 +1,47 @@
-sklfjlej
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = 'ayesha4620'
+        DOCKER_CREDENTIALS_ID = 'docker-hub-creds'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/ayesha4620/Git_task/b1.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    dockerImage = docker.build(nginx)
+                }
+            }
+        }
+
+        stage('Login to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
+                        // Push inside this block
+                        dockerImage.push("latest")
+                    }
+                }
+            }
+        }
+
+        stage('Clean Up') {
+            steps {
+                sh "docker rmi $DOCKER_IMAGE:latest || true"
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
